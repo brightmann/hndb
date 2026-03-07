@@ -20,6 +20,7 @@ This is a Next.js 16 directory/blog boilerplate using the App Router, MDX for co
 A unified, config-driven content system supports multiple content types from a single codebase:
 
 **Directory Structure:**
+
 ```
 content/
   articles/     # Blog articles
@@ -28,11 +29,13 @@ content/
 ```
 
 **Content Configuration** (`src/config/content.config.ts`):
+
 - Define content types with custom features (images, tags, search, pagination)
 - Configure listing and detail page behavior per type
 - Set pagination defaults and sort options
 
 **Content Loader** (`src/lib/content/loader.ts`):
+
 - `getContent()` - Paginated content with filtering by type/tag
 - `getContentBySlug()` - Single item lookup
 - `getContentByTag()` - Tag-based filtering
@@ -64,9 +67,9 @@ content/
 ### Key Files
 
 - `src/lib/content/` - Unified content system
-  - `loader.ts` - Content loading and querying
-  - `types.ts` - TypeScript type definitions
-  - `index.ts` - Public API exports
+    - `loader.ts` - Content loading and querying
+    - `types.ts` - TypeScript type definitions
+    - `index.ts` - Public API exports
 - `src/lib/metadata.ts` - SEO metadata generation
 - `src/lib/structured-data.tsx` - JSON-LD schema helpers
 - `src/types/content.ts` - Additional TypeScript interfaces
@@ -75,23 +78,23 @@ content/
 
 - UI primitives in `src/components/ui/` are shadcn/ui components (button, card, input, badge, slider, dialog, dropdown-menu, command, etc.)
 - Layout components in `src/components/layout/`:
-  - `ContentCard` - Content item cards with variants (default, featured, compact)
-  - `ContentGrid` - Grid layout for content cards
+    - `ContentCard` - Content item cards with variants (default, featured, compact)
+    - `ContentGrid` - Grid layout for content cards
 - Search functionality in `src/components/Search/` with useSearch hook
 - Navigation components:
-  - `Header` - Main navigation with mobile menu, search shortcut, theme toggle
-  - `Footer` - Site footer
-  - `MobileMenu` - Responsive mobile navigation
-  - `Breadcrumbs` - Breadcrumb navigation
+    - `Header` - Main navigation with mobile menu, search shortcut, theme toggle
+    - `Footer` - Site footer
+    - `MobileMenu` - Responsive mobile navigation
+    - `Breadcrumbs` - Breadcrumb navigation
 - Theme components:
-  - `ThemeProvider` - next-themes provider wrapper
-  - `ThemeToggle` - Theme switcher button
+    - `ThemeProvider` - next-themes provider wrapper
+    - `ThemeToggle` - Theme switcher button
 - Media components:
-  - `AudioPlayer` - Optional audio playback with controls
+    - `AudioPlayer` - Optional audio playback with controls
 - Utility components:
-  - `Pagination` - Page navigation
-  - `TagFilter` - Tag filtering
-  - `ErrorBoundary` - React error boundary
+    - `Pagination` - Page navigation
+    - `TagFilter` - Tag filtering
+    - `ErrorBoundary` - React error boundary
 
 ### Dark Mode
 
@@ -103,3 +106,14 @@ Uses `next-themes` with system preference detection. Theme toggle in navbar. CSS
 2. Add type config to `contentConfig.types` in `src/config/content.config.ts`
 3. Add MDX files with frontmatter to the new directory
 4. Routes are automatically generated
+
+## Browser Automation
+
+Use `agent-browser` for web automation. Run `agent-browser --help` for all commands.
+
+Core workflow:
+
+1. `agent-browser open <url>` - Navigate to page
+2. `agent-browser snapshot -i` - Get interactive elements with refs (@e1, @e2)
+3. `agent-browser click @e1` / `fill @e2 "text"` - Interact using refs
+4. Re-snapshot after page changes
