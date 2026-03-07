@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { contentConfig } from '@/config/content.config';
 import { seoConfig } from '@/config/directory.config';
@@ -39,13 +40,40 @@ export async function generateMetadata({ params }: PageProps) {
   });
 }
 
-export default async function ContentTypePage({ params, searchParams }: PageProps) {
-  const { contentType } = await params;
+function ContentListingFallback() {
+  return (
+    <div className="min-h-screen">
+      <section className="py-section-sm bg-gradient-to-b from-muted/50 to-background border-b border-border">
+        <div className="max-w-content mx-auto px-gutter lg:px-gutter-lg">
+          <div className="h-4 w-48 bg-muted rounded animate-pulse mb-content" />
+          <div className="h-10 w-64 bg-muted rounded animate-pulse mb-4" />
+          <div className="h-6 w-96 bg-muted rounded animate-pulse" />
+        </div>
+      </section>
+      <section className="py-section-sm">
+        <div className="max-w-content mx-auto px-gutter lg:px-gutter-lg">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-content">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-64 bg-muted rounded-lg animate-pulse"
+                style={{ animationDelay: `${i * 100}ms` }}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
 
-  if (!isValidContentType(contentType)) {
-    notFound();
-  }
-
+async function ContentListingAsync({
+  contentType,
+  searchParams,
+}: {
+  contentType: string;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const config = contentConfig.types[contentType];
   const resolvedSearchParams = await searchParams;
 
@@ -85,7 +113,7 @@ export default async function ContentTypePage({ params, searchParams }: PageProp
   const serializedItems = items.map((item) => ({
     slug: item.slug,
     contentType: item.contentType,
-    content: '', // Don't send MDX content to client
+    content: '',
     meta: {
       ...item.meta,
       date: item.meta.date ? String(item.meta.date) : undefined,
@@ -103,7 +131,7 @@ export default async function ContentTypePage({ params, searchParams }: PageProp
         pagination={pagination}
         activeTags={filters.tags || []}
         activeQuery={filters.query || ''}
-        activeSortBy={filters.sortBy || sortBy}
+        activeSortBy={String(filters.sortBy || sortBy)}
         activeSortOrder={filters.sortOrder || sortOrder}
         allTags={allTags}
         contentType={contentType}
@@ -111,5 +139,19 @@ export default async function ContentTypePage({ params, searchParams }: PageProp
         breadcrumbs={breadcrumbs}
       />
     </>
+  );
+}
+
+export default async function ContentTypePage({ params, searchParams }: PageProps) {
+  const { contentType } = await params;
+
+  if (!isValidContentType(contentType)) {
+    notFound();
+  }
+
+  return (
+    <Suspense fallback={<ContentListingFallback />}>
+      <ContentListingAsync contentType={contentType} searchParams={searchParams} />
+    </Suspense>
   );
 }
