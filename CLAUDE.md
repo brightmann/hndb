@@ -13,7 +13,7 @@ pnpm start       # Start production server
 
 ## Architecture
 
-This is a Next.js 15 directory/blog boilerplate using the App Router, MDX for content, shadcn/ui components, and Tailwind CSS with dark mode support.
+This is a Next.js 16 directory/blog boilerplate using the App Router, MDX for content, shadcn/ui components, and Tailwind CSS with dark mode support.
 
 ### Content System
 
