@@ -1,0 +1,66 @@
+---
+title: 'How the Content System Works'
+topic: 'Architecture'
+image: '/example1.png'
+summary: 'An overview of the unified, config-driven content system that powers this template — from MDX files to rendered pages.'
+tags: ['content', 'architecture']
+date: '2024-01-10'
+author: 'Starter Directory Team'
+---
+
+This template uses a unified content system that turns MDX files into fully rendered pages with listing, filtering, and detail views — all driven by configuration.
+
+## Content Directory Structure
+
+All content lives in the `content/` directory, organized by type:
+
+```
+content/
+  articles/     # Blog-style articles
+  guides/       # How-to guides and tutorials
+  [your-type]/  # Add your own content types
+```
+
+Each MDX file in these directories becomes a page on your site automatically.
+
+## Frontmatter
+
+Every content file starts with YAML frontmatter that defines its metadata:
+
+```yaml
+---
+title: 'Your Post Title'
+summary: 'A short description for cards and SEO.'
+date: '2024-01-15'
+author: 'Your Name'
+image: '/your-image.png'
+tags: ['tag-one', 'tag-two']
+topic: 'Category'
+---
+```
+
+The `title` field is required. All other fields are optional but recommended for the best display.
+
+## How Content Gets Loaded
+
+The content loader at `src/lib/content/loader.ts` provides several functions:
+
+- **getContent()** — Paginated content with optional filtering by type or tag
+- **getContentBySlug()** — Fetch a single item by its slug (filename)
+- **getContentByTag()** — Filter content by a specific tag
+- **getAllTags()** — Get all tags used across your content
+- **getAllContentSlugs()** — Used for static page generation
+
+## Automatic Routing
+
+Routes are generated automatically based on content type and filename:
+
+- `/articles` — Lists all articles
+- `/articles/content-system-overview` — This page (slug from filename)
+- `/tags/content` — All items tagged "content"
+
+No manual route configuration needed. Add a file, get a page.
+
+## What to Do Next
+
+Replace these placeholder files with your own content. See the "Adding and Managing Content" guide for a step-by-step walkthrough.

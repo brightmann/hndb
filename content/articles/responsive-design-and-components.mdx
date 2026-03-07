@@ -1,0 +1,57 @@
+---
+title: 'Responsive Design and Components'
+topic: 'Components'
+image: '/example1.png'
+summary: 'An overview of the UI components included in this template and how they adapt across screen sizes.'
+tags: ['components', 'customization']
+date: '2024-01-06'
+author: 'Starter Directory Team'
+---
+
+This template ships with a set of pre-built components designed to look good on every screen size, from mobile phones to wide desktop monitors.
+
+## Component Library
+
+The UI is built on shadcn/ui primitives located in `src/components/ui/`. These are unstyled, accessible components that you can customize freely:
+
+- **Button** — Multiple variants (default, outline, ghost)
+- **Card** — Content container with header, body, and footer slots
+- **Badge** — Small labels for tags and categories
+- **Input** — Form inputs with consistent styling
+- **Dialog** — Modal overlays for search and confirmations
+- **Dropdown Menu** — Navigation and action menus
+
+## Layout Components
+
+Higher-level layout components in `src/components/layout/` handle content presentation:
+
+### ContentCard
+
+Displays a single content item with image, title, summary, tags, and date. Supports three variants:
+
+- **default** — Standard card with image
+- **featured** — Larger card for hero placement
+- **compact** — Minimal card without image
+
+### ContentGrid
+
+Arranges ContentCards in a responsive grid that adapts from 1 column on mobile to 3 columns on desktop.
+
+## Navigation
+
+- **Header** — Sticky navigation with logo, links, search shortcut, and theme toggle. Collapses to a hamburger menu on mobile.
+- **Footer** — Site-wide footer with links and branding
+- **MobileMenu** — Full-screen overlay menu for small screens
+- **Breadcrumbs** — Contextual navigation on detail pages
+
+## Customizing Components
+
+All components use Tailwind CSS classes and CSS variables. To change the look and feel:
+
+1. Modify CSS variables in `globals.css` for colors and spacing
+2. Edit component files directly for structural changes
+3. Add new shadcn/ui components with `npx shadcn@latest add [component]`
+
+## Responsive Breakpoints
+
+The template uses Tailwind's default breakpoints: `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px). Content grids, navigation, and typography all adapt at these breakpoints.

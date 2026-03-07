@@ -1,0 +1,97 @@
+---
+title: 'Adding a New Content Type'
+topic: 'Configuration'
+image: '/example2.png'
+summary: 'Step-by-step instructions for adding a custom content type beyond the default articles and guides.'
+tags: ['content', 'configuration']
+date: '2024-01-03'
+author: 'Starter Directory Team'
+---
+
+The template ships with two content types — articles and guides — but you can add as many as you need. This guide shows you how.
+
+## Step 1: Create the Content Directory
+
+Create a new folder inside `content/`:
+
+```bash
+mkdir content/resources
+```
+
+## Step 2: Add the Type Configuration
+
+Open `src/config/content.config.ts` and add a new entry to the `types` object:
+
+```typescript
+resources: {
+  slug: 'resources',
+  name: 'Resource',
+  namePlural: 'Resources',
+  directory: 'resources',
+  requiredFields: ['title'],
+  features: {
+    images: true,
+    tags: true,
+    search: true,
+    pagination: true,
+  },
+  defaultSort: {
+    field: 'date',
+    order: 'desc',
+  },
+  card: {
+    showImage: true,
+    showSummary: true,
+    showTags: true,
+    showDate: true,
+  },
+  detail: {
+    showImage: true,
+    showTags: true,
+    showDate: true,
+    showAuthor: true,
+  },
+},
+```
+
+## Step 3: Add Content
+
+Create MDX files in your new directory with the standard frontmatter:
+
+```mdx
+---
+title: 'Useful Design Tools'
+summary: 'A curated list of design tools for web projects.'
+date: '2024-02-01'
+tags: ['design', 'tools']
+author: 'Your Name'
+---
+
+Your content here.
+```
+
+## Step 4: Verify
+
+Start the dev server with `pnpm dev` and visit:
+
+- `/resources` — Your new listing page
+- `/resources/useful-design-tools` — The detail page
+
+Both routes are created automatically. The home page will also show a "Resources" section if content exists.
+
+## Configuration Options
+
+You can toggle features per content type. For example, to create a type without images:
+
+```typescript
+card: {
+  showImage: false,
+  showSummary: true,
+  showTags: true,
+  showDate: true,
+},
+```
+
+## That is It
+
+No routing changes, no component modifications. The content system handles everything based on your configuration.

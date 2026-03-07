@@ -1,0 +1,59 @@
+---
+title: 'Search and Filtering'
+topic: 'Features'
+image: '/example2.png'
+summary: 'How the built-in search and tag filtering system helps visitors find content quickly across your directory.'
+tags: ['content', 'customization']
+date: '2024-01-07'
+author: 'Starter Directory Team'
+---
+
+This template includes client-side search and tag-based filtering so visitors can find content quickly without a backend search service.
+
+## Search
+
+The search component is accessible from the navigation bar via the search icon or keyboard shortcut. It searches across titles, summaries, and tags of all content.
+
+### How It Works
+
+Search is powered by the `useSearch` hook in `src/components/Search/`. It loads content metadata client-side and filters results as the user types. No external search service is required.
+
+### Keyboard Shortcut
+
+Press `Cmd+K` (Mac) or `Ctrl+K` (Windows/Linux) to open the search dialog from any page.
+
+## Tag Filtering
+
+Tags provide a way to categorize and cross-reference content. Visitors can:
+
+- Click any tag on a content card to see all items with that tag
+- Browse tags at `/tags/[tag-name]`
+- Filter within a content type listing page
+
+### Adding Tags to Content
+
+Add tags in your MDX frontmatter as an array:
+
+```yaml
+tags: ['getting-started', 'configuration']
+```
+
+Tags are displayed as badges on content cards and detail pages. Choose tags that overlap across content types so filtering surfaces relevant results.
+
+## Enabling and Disabling
+
+Both search and tags can be toggled globally in `src/config/content.config.ts`:
+
+```typescript
+features: {
+  search: true,
+  tags: true,
+  pagination: true,
+},
+```
+
+You can also enable or disable these per content type in the `types` configuration.
+
+## Tip
+
+Use 2-3 tags per content item. Too many tags dilute their usefulness; too few make filtering unhelpful.

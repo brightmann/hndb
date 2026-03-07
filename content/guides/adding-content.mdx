@@ -1,0 +1,75 @@
+---
+title: 'Adding and Managing Content'
+topic: 'Content'
+image: '/example1.png'
+summary: 'Learn how to create, organize, and manage MDX content files in your directory.'
+tags: ['content', 'getting-started']
+date: '2024-01-04'
+author: 'Starter Directory Team'
+---
+
+Adding content to your directory is as simple as creating an MDX file in the right folder. This guide covers everything you need to know.
+
+## Creating a New Post
+
+1. Choose the content type (e.g., `articles` or `guides`)
+2. Create a new `.mdx` file in `content/[type]/`
+3. Add frontmatter at the top of the file
+4. Write your content in Markdown below the frontmatter
+
+### Example
+
+Create `content/articles/my-first-post.mdx`:
+
+```mdx
+---
+title: 'My First Post'
+summary: 'A brief introduction to my new directory site.'
+date: '2024-02-01'
+author: 'Your Name'
+image: '/my-image.png'
+tags: ['introduction']
+topic: 'General'
+---
+
+Write your content here using standard Markdown syntax.
+
+## You Can Use Headings
+
+And **bold text**, *italics*, [links](https://example.com),
+code blocks, lists, and everything else Markdown supports.
+```
+
+## File Naming
+
+The filename becomes the URL slug. `my-first-post.mdx` becomes `/articles/my-first-post`. Use lowercase, hyphen-separated names.
+
+## Images
+
+Place images in the `public/` directory and reference them with an absolute path:
+
+```yaml
+image: '/my-image.png'
+```
+
+The image appears on content cards and at the top of detail pages.
+
+## Frontmatter Reference
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `title` | Yes | Display title |
+| `summary` | No | Short description for cards and SEO |
+| `date` | No | Publication date (YYYY-MM-DD) |
+| `author` | No | Author name |
+| `image` | No | Path to cover image in `public/` |
+| `tags` | No | Array of tag strings |
+| `topic` | No | Category label |
+
+## Deleting Content
+
+Remove the MDX file and the page disappears. No configuration changes needed.
+
+## Ordering
+
+Content is sorted by date (newest first) by default. To change the sort order, edit the `defaultSort` setting in `src/config/content.config.ts`.

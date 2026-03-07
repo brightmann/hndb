@@ -1,0 +1,62 @@
+---
+title: 'Theming and Dark Mode Support'
+topic: 'Customization'
+image: '/example2.png'
+summary: 'How this template handles theming, dark mode, and CSS custom properties for a consistent visual experience.'
+tags: ['customization', 'theming']
+date: '2024-01-09'
+author: 'Starter Directory Team'
+---
+
+This template includes built-in dark mode support and a flexible theming system powered by CSS custom properties and `next-themes`.
+
+## How Dark Mode Works
+
+The theme system uses `next-themes` with automatic system preference detection. Users can toggle between light and dark modes using the button in the navigation bar.
+
+Theme classes are applied to the root `<html>` element, and CSS variables in `src/app/globals.css` change accordingly:
+
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  /* ... more variables */
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+}
+```
+
+## Customizing Colors
+
+To change the color palette, edit the CSS custom properties in `globals.css`. The template uses HSL values so you can adjust hue, saturation, and lightness independently.
+
+Key variables to customize:
+
+- `--primary` — Accent color for links, buttons, and highlights
+- `--background` / `--foreground` — Base page colors
+- `--muted` / `--muted-foreground` — Secondary text and backgrounds
+- `--card` / `--card-foreground` — Content card colors
+
+## Fonts
+
+Heading and body fonts are configured in `src/config/directory.config.ts`:
+
+```typescript
+theme: {
+  fontHeading: 'Cormorant_Garamond',
+  fontBody: 'Nunito',
+},
+```
+
+Swap these to any Google Font supported by `next/font`. The font files are automatically optimized and self-hosted.
+
+## Components
+
+The `ThemeProvider` component wraps the application and the `ThemeToggle` component provides the UI toggle. Both live in `src/components/` and work out of the box.
+
+## Tip
+
+When customizing colors, always test both light and dark modes. A color that looks great on white may be unreadable on a dark background.

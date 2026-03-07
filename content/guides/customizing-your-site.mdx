@@ -1,0 +1,81 @@
+---
+title: 'Customizing Your Site'
+topic: 'Customization'
+image: '/example1.png'
+summary: 'How to personalize the branding, colors, fonts, and layout of your directory site.'
+tags: ['customization', 'configuration']
+date: '2024-01-02'
+author: 'Starter Directory Team'
+---
+
+This guide covers all the ways you can make this template your own, from basic branding to deeper visual customization.
+
+## Site Identity
+
+Edit `src/config/directory.config.ts` to set your site name, description, and SEO details:
+
+```typescript
+export const directoryConfig: DirectoryConfig = {
+  name: 'Your Site Name',
+  description: 'Your tagline or description',
+  // ...
+};
+```
+
+This name appears in the header, browser tab, and all SEO metadata.
+
+## Colors
+
+The color system uses CSS custom properties defined in `src/app/globals.css`. To change your primary accent color, update the `--primary` variable in both the `:root` (light) and `.dark` (dark mode) blocks.
+
+Common variables to customize:
+
+| Variable | Purpose |
+|----------|---------|
+| `--primary` | Accent color (links, buttons) |
+| `--background` | Page background |
+| `--foreground` | Main text color |
+| `--muted` | Secondary backgrounds |
+| `--card` | Card backgrounds |
+
+## Fonts
+
+Change heading and body fonts in `directory.config.ts`:
+
+```typescript
+theme: {
+  fontHeading: 'Your_Heading_Font',
+  fontBody: 'Your_Body_Font',
+},
+```
+
+Use any font available through `next/font/google`. The font name should use underscores instead of spaces.
+
+## Content Features
+
+Toggle features globally or per content type in `src/config/content.config.ts`:
+
+```typescript
+features: {
+  images: true,    // Show cover images
+  tags: true,      // Enable tag filtering
+  search: true,    // Enable search
+  pagination: true, // Enable pagination
+},
+```
+
+## Logo
+
+Replace `/public/logo.svg` with your own logo file. Update the path in `seoConfig` if you use a different filename.
+
+## Pagination
+
+Change items per page in `directory.config.ts`:
+
+```typescript
+itemsPerPage: 12, // Default is 9
+```
+
+## Going Further
+
+For deeper customization, edit the components directly in `src/components/`. The template uses Tailwind CSS, so most styling changes are straightforward class modifications.

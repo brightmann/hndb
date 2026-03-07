@@ -1,0 +1,60 @@
+---
+title: 'Built-in SEO Features'
+topic: 'SEO'
+image: '/example1.png'
+summary: 'This template includes a sitemap, RSS feed, structured data, Open Graph metadata, and robots.txt — all configured automatically.'
+tags: ['seo', 'configuration']
+date: '2024-01-08'
+author: 'Starter Directory Team'
+---
+
+Search engine optimization is built into this template from the ground up. Here is what you get out of the box and how to configure it.
+
+## What is Included
+
+### XML Sitemap
+
+Generated automatically at `/sitemap.xml` from all your content. Search engines use this to discover and index your pages. The sitemap updates whenever you add or remove content.
+
+### RSS Feed
+
+Available at `/feed.xml`, allowing readers to subscribe to your content in any RSS reader. The feed includes all content types.
+
+### Robots.txt
+
+Configured at `/robots.txt` to allow search engine crawling. Edit `src/app/robots.ts` to customize rules.
+
+### Structured Data
+
+JSON-LD schema markup is added automatically to pages:
+
+- **Organization** schema on the home page
+- **Article** schema on content detail pages
+- **Breadcrumb** schema for navigation context
+
+### Open Graph and Twitter Cards
+
+Every page includes Open Graph and Twitter Card metadata for rich social sharing previews. The metadata is generated from your content's frontmatter.
+
+## Configuration
+
+All SEO settings live in `src/config/directory.config.ts`:
+
+```typescript
+export const seoConfig: SEOConfig = {
+  siteUrl: 'https://your-domain.com',
+  siteName: 'Your Site Name',
+  description: 'Your site description',
+  twitterHandle: '@yourhandle',
+  defaultAuthor: 'Your Name',
+  defaultKeywords: ['your', 'keywords'],
+};
+```
+
+## Per-Page Metadata
+
+Each content file's frontmatter (`title`, `summary`, `image`) is used to generate page-specific metadata. The `summary` field becomes the meta description, and the `image` becomes the Open Graph image.
+
+## Google Verification
+
+Set the `GOOGLE_SITE_VERIFICATION` environment variable to verify your site with Google Search Console.

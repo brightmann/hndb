@@ -2,8 +2,8 @@ import { DirectoryConfig } from '@/types/content';
 import { SEOConfig } from '@/lib/content/types';
 
 export const directoryConfig: DirectoryConfig = {
-  name: 'DevInsights',
-  description: 'Practical articles and guides for modern web developers',
+  name: 'Starter Directory',
+  description: 'A boilerplate for building content directories with Next.js',
   itemsPerPage: 9,
   features: {
     images: true,
@@ -18,18 +18,18 @@ export const directoryConfig: DirectoryConfig = {
 };
 
 export const seoConfig: SEOConfig = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://devinsights.example.com',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://starter-directory.example.com',
   siteName: directoryConfig.name,
   description: directoryConfig.description,
-  twitterHandle: '@devinsights',
+  twitterHandle: '@starterdirectory',
   socialLinks: [
-    'https://github.com/devinsights',
-    'https://twitter.com/devinsights',
+    'https://github.com/your-username/your-repo',
+    'https://twitter.com/starterdirectory',
   ],
   logo: '/logo.svg',
   defaultOgImage: '/og-default.png',
-  defaultAuthor: 'DevInsights Team',
-  defaultKeywords: ['web development', 'tutorials', 'guides', 'nextjs', 'react', 'javascript'],
+  defaultAuthor: 'Starter Directory Team',
+  defaultKeywords: ['directory', 'boilerplate', 'nextjs', 'template', 'starter'],
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
   },

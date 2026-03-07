@@ -1,0 +1,70 @@
+---
+title: 'Deploying to Production'
+topic: 'Deployment'
+image: '/example2.png'
+summary: 'How to build, optimize, and deploy your directory site to production with Vercel or any static host.'
+tags: ['seo', 'getting-started']
+date: '2024-01-01'
+author: 'Starter Directory Team'
+---
+
+Once your content is ready, deploying to production takes just a few steps. This guide covers building, environment setup, and deployment options.
+
+## Building for Production
+
+Run the production build:
+
+```bash
+pnpm build
+```
+
+This generates an optimized build in the `.next/` directory. The build process will:
+
+- Pre-render all static pages
+- Generate the XML sitemap and RSS feed
+- Optimize images and fonts
+- Bundle and minify JavaScript and CSS
+
+## Environment Variables
+
+Set these in your hosting platform's environment settings:
+
+| Variable | Purpose |
+|----------|---------|
+| `NEXT_PUBLIC_SITE_URL` | Your production URL (used for sitemap, OG tags) |
+| `GOOGLE_SITE_VERIFICATION` | Google Search Console verification code |
+
+## Deploying to Vercel
+
+The fastest option for Next.js sites:
+
+1. Push your repository to GitHub
+2. Import the project at [vercel.com/new](https://vercel.com/new)
+3. Vercel detects Next.js automatically and configures the build
+4. Set your environment variables in the Vercel dashboard
+5. Deploy
+
+Every push to your main branch triggers a new deployment automatically.
+
+## Other Hosting Options
+
+This template works with any platform that supports Next.js:
+
+- **Netlify** — Use the Next.js runtime plugin
+- **AWS Amplify** — Supports Next.js App Router
+- **Self-hosted** — Run `pnpm start` behind a reverse proxy
+
+## Post-Deployment Checklist
+
+After your first deployment:
+
+- [ ] Verify your site loads at your custom domain
+- [ ] Check `/sitemap.xml` is accessible
+- [ ] Test `/feed.xml` in an RSS reader
+- [ ] Submit your sitemap to Google Search Console
+- [ ] Test social sharing previews with Open Graph debuggers
+- [ ] Confirm dark mode works in production
+
+## Performance
+
+The template is optimized for performance out of the box. Run a Lighthouse audit on your deployed site to confirm scores. Aim for 90+ across all categories.

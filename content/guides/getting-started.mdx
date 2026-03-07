@@ -1,0 +1,70 @@
+---
+title: 'Getting Started with Starter Directory'
+topic: 'Setup'
+image: '/example2.png'
+summary: 'Set up your development environment and run the template locally in under five minutes.'
+tags: ['getting-started', 'configuration']
+date: '2024-01-05'
+author: 'Starter Directory Team'
+---
+
+This guide walks you through cloning, installing, and running the Starter Directory template on your local machine.
+
+## Prerequisites
+
+You will need:
+
+- **Node.js 18+** — Check with `node --version`
+- **pnpm** — Install with `npm install -g pnpm` if you do not have it
+
+## Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+pnpm install
+```
+
+## Running Locally
+
+Start the development server:
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser. The site will hot-reload as you make changes.
+
+## Project Structure
+
+Here are the key directories you will work with:
+
+```
+content/          # Your MDX content files (articles, guides)
+src/
+  app/            # Next.js App Router pages and layouts
+  components/     # React components (UI, layout, navigation)
+  config/         # Site and content configuration
+  lib/            # Utilities, content loader, metadata helpers
+```
+
+## First Steps
+
+1. **Edit site config** — Open `src/config/directory.config.ts` and set your site name, description, and SEO settings
+2. **Replace content** — Delete the placeholder files in `content/` and add your own MDX files
+3. **Customize theme** — Edit CSS variables in `src/app/globals.css` to match your brand colors
+
+## Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production |
+| `pnpm start` | Start production server |
+| `pnpm lint` | Run ESLint |
+
+## Next Steps
+
+Read the "Adding and Managing Content" guide to learn how to create your first real content, or the "Customizing Your Site" guide to personalize the look and feel.
