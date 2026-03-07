@@ -12,14 +12,28 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Edit|Write",
-        "command": "pnpm lint --fix --file $CLAUDE_FILE_PATH 2>/dev/null || true"
+        "matcher": {
+          "tools": ["Edit", "Write"]
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pnpm lint --fix --file $CLAUDE_FILE_PATH 2>/dev/null || true"
+          }
+        ]
       }
     ],
     "PreToolUse": [
       {
-        "matcher": "Edit|Write",
-        "command": "echo \"$CLAUDE_FILE_PATH\" | grep -qE '\\.(env|env\\.local|env\\.development|env\\.production)$|pnpm-lock\\.yaml$' && echo 'BLOCKED: This is a protected file (.env or lock file). Do not modify.' >&2 && exit 1 || exit 0"
+        "matcher": {
+          "tools": ["Edit", "Write"]
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$CLAUDE_FILE_PATH\" | grep -qE '\\.(env|env\\.local|env\\.development|env\\.production)$|pnpm-lock\\.yaml$' && echo 'BLOCKED: This is a protected file (.env or lock file). Do not modify.' >&2 && exit 1 || exit 0"
+          }
+        ]
       }
     ]
   }
