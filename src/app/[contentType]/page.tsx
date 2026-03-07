@@ -58,12 +58,11 @@ export default async function ContentTypePage({ params, searchParams }: PageProp
       ? tagsParam
       : tagsParam.split(',').filter(Boolean)
     : undefined;
-  const sortBy = (typeof resolvedSearchParams.sort === 'string'
-    ? resolvedSearchParams.sort
-    : config.defaultSort?.field || contentConfig.defaults.sortField) as keyof BaseContentMeta;
-  const sortOrder = (typeof resolvedSearchParams.order === 'string'
-    ? (resolvedSearchParams.order as 'asc' | 'desc')
-    : config.defaultSort?.order || contentConfig.defaults.sortOrder);
+  const sortParts = typeof resolvedSearchParams.sort === 'string'
+    ? resolvedSearchParams.sort.split(':')
+    : undefined;
+  const sortBy = (sortParts?.[0] || config.defaultSort?.field || contentConfig.defaults.sortField) as keyof BaseContentMeta;
+  const sortOrder = (sortParts?.[1] as 'asc' | 'desc') || config.defaultSort?.order || contentConfig.defaults.sortOrder;
   const pageSize = config.pageSize || contentConfig.defaults.pageSize;
 
   // Server-side filtering, sorting, and pagination
