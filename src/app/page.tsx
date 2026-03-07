@@ -1,3 +1,4 @@
+import { cacheLife, cacheTag } from 'next/cache';
 import { getContent } from '@/lib/content';
 import { directoryConfig } from '@/config/directory.config';
 import { contentConfig } from '@/config/content.config';
@@ -7,6 +8,10 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 export default async function Home() {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   // Fetch all content, then organize by type
   const { items: allContent } = await getContent({ pageSize: 100 });
   const contentTypes = Object.values(contentConfig.types);

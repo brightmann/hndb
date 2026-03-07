@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { cache } from 'react';
+import { cacheLife, cacheTag } from 'next/cache';
 import { contentConfig } from '@/config/content.config';
 import type {
   ContentItem,
@@ -10,20 +12,9 @@ import type {
 } from './types';
 
 /**
- * Cache for loaded content (invalidated on build)
- */
-const contentCache = new Map<string, ContentItem[]>();
-
-/**
  * Load all content for a specific type
  */
 function loadContentType(contentType: string): ContentItem[] {
-  const cacheKey = contentType;
-
-  if (contentCache.has(cacheKey)) {
-    return contentCache.get(cacheKey)!;
-  }
-
   const typeConfig = contentConfig.types[contentType];
   if (!typeConfig) {
     console.warn(`Unknown content type: ${contentType}`);
@@ -60,7 +51,6 @@ function loadContentType(contentType: string): ContentItem[] {
     };
   });
 
-  contentCache.set(cacheKey, items);
   return items;
 }
 
@@ -77,6 +67,10 @@ function loadAllContent(): ContentItem[] {
 export async function getContent(
   query: ContentQuery = {}
 ): Promise<PaginatedContent> {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   const {
     contentType,
     page = 1,
@@ -155,14 +149,19 @@ export async function getContent(
 
 /**
  * Get a single content item by type and slug
+ * Wrapped with React cache() so generateMetadata and page component share a single call per render pass
  */
-export async function getContentBySlug(
+export const getContentBySlug = cache(async function getContentBySlug(
   contentType: string,
   slug: string
 ): Promise<ContentItem | null> {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   const items = loadContentType(contentType);
   return items.find((item) => item.slug === slug) || null;
-}
+});
 
 /**
  * Get all content for a specific type (no pagination)
@@ -170,6 +169,10 @@ export async function getContentBySlug(
 export async function getAllContentByType(
   contentType: string
 ): Promise<ContentItem[]> {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   return loadContentType(contentType);
 }
 
@@ -179,6 +182,10 @@ export async function getAllContentByType(
 export async function getTagsForType(
   contentType?: string
 ): Promise<Record<string, number>> {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   const items = contentType ? loadContentType(contentType) : loadAllContent();
 
   const tagCounts: Record<string, number> = {};
@@ -196,6 +203,10 @@ export async function getTagsForType(
  * Get all unique tags
  */
 export async function getAllTags(): Promise<string[]> {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   const tagCounts = await getTagsForType();
   return Object.keys(tagCounts).sort();
 }
@@ -204,6 +215,10 @@ export async function getAllTags(): Promise<string[]> {
  * Get content by tag (across all types)
  */
 export async function getContentByTag(tag: string): Promise<ContentItem[]> {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   const items = loadAllContent();
   return items.filter((item) => item.meta.tags?.includes(tag));
 }
@@ -214,6 +229,10 @@ export async function getContentByTag(tag: string): Promise<ContentItem[]> {
 export async function getAllContentSlugs(): Promise<
   Array<{ contentType: string; slug: string }>
 > {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   return loadAllContent().map((item) => ({
     contentType: item.contentType,
     slug: item.slug,
@@ -240,6 +259,10 @@ export function isValidContentType(contentType: string): boolean {
 export async function getAllContentForSearch(): Promise<
   Array<Omit<ContentItem, 'content'>>
 > {
+  'use cache';
+  cacheLife('max');
+  cacheTag('content');
+
   const items = loadAllContent();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return items.map(({ content, ...rest }) => rest);

@@ -1,12 +1,13 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { Rss } from 'lucide-react';
 import { contentConfig } from '@/config/content.config';
 import { directoryConfig, seoConfig } from '@/config/directory.config';
 import { Separator } from '@/components/ui/separator';
+import { CopyrightYear } from './CopyrightYear';
 
 export function Footer() {
   const contentTypes = Object.values(contentConfig.types);
-  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border bg-muted/30">
@@ -85,7 +86,7 @@ export function Footer() {
         {/* Copyright Bar */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-caption text-muted-foreground">
-            &copy; {currentYear} {seoConfig.siteName}. All rights reserved.
+            &copy; <Suspense fallback="2026"><CopyrightYear /></Suspense> {seoConfig.siteName}. All rights reserved.
           </p>
 
           {/* Social Links - if configured */}

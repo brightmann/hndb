@@ -1,19 +1,16 @@
+import type { NextConfig } from 'next'
 import createMDX from '@next/mdx'
-import { fileURLToPath } from 'url';
-import path from 'path';
+import path from 'path'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  cacheComponents: true,
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@/src': path.join(__dirname, 'src'),
-    };
-    return config;
+      '@/src': path.join(process.cwd(), 'src'),
+    }
+    return config
   },
 }
 

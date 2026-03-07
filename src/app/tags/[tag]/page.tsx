@@ -1,4 +1,7 @@
 import { getContentByTag, getAllTags } from '@/lib/content';
+import { seoConfig } from '@/config/directory.config';
+import { generateTagMetadata } from '@/lib/metadata';
+import { JsonLd, generateCollectionPageSchema } from '@/lib/structured-data';
 import ContentGrid from '@/components/layout/ContentGrid';
 import { Breadcrumbs, generateTagBreadcrumbs } from '@/components/Breadcrumbs';
 import { Badge } from '@/components/ui/badge';
@@ -19,11 +22,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
+  const content = await getContentByTag(decodedTag);
 
-  return {
-    title: `Content tagged with "${decodedTag}"`,
-    description: `Browse all content tagged with ${decodedTag}`,
-  };
+  return generateTagMetadata(decodedTag, content.length);
 }
 
 export default async function TagPage({ params }: PageProps) {
@@ -36,8 +37,12 @@ export default async function TagPage({ params }: PageProps) {
   // Get other popular tags (excluding current)
   const otherTags = allTags.filter((t) => t !== decodedTag).slice(0, 8);
 
+  const tagDescription = `Browse ${content.length} items tagged with ${decodedTag}`;
+  const tagUrl = `${seoConfig.siteUrl}/tags/${encodeURIComponent(decodedTag)}`;
+
   return (
     <div className="min-h-screen">
+      <JsonLd data={generateCollectionPageSchema(decodedTag, tagDescription, tagUrl, content.length)} />
       {/* Hero Header */}
       <section className="py-section-sm bg-gradient-to-b from-muted/50 to-background border-b border-border">
         <div className="max-w-content mx-auto px-gutter lg:px-gutter-lg">

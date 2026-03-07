@@ -4,12 +4,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { contentConfig } from '@/config/content.config';
+import { seoConfig } from '@/config/directory.config';
 import {
   getContentBySlug,
   getAllContentSlugs,
   isValidContentType,
   getContent,
 } from '@/lib/content';
+import { generateContentMetadata } from '@/lib/metadata';
+import {
+  JsonLd,
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/structured-data';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -37,19 +44,7 @@ export async function generateMetadata({ params }: PageProps) {
     return { title: 'Not Found' };
   }
 
-  return {
-    title: item.meta.title,
-    description: item.meta.summary,
-    openGraph: {
-      title: item.meta.title,
-      description: item.meta.summary,
-      images: item.meta.image ? [item.meta.image] : [],
-      type: 'article',
-      publishedTime: item.meta.date,
-      authors: item.meta.author ? [item.meta.author] : [],
-      tags: item.meta.tags,
-    },
-  };
+  return generateContentMetadata(item);
 }
 
 // Calculate reading time
@@ -84,8 +79,15 @@ export default async function ContentDetailPage({ params }: PageProps) {
   });
   const related = relatedItems.filter((i) => i.slug !== slug).slice(0, 3);
 
+  const breadcrumbItems = [
+    { name: 'Home', url: seoConfig.siteUrl },
+    { name: config.namePlural, url: `${seoConfig.siteUrl}/${contentType}` },
+    { name: item.meta.title, url: `${seoConfig.siteUrl}/${contentType}/${slug}` },
+  ];
+
   return (
     <article className="min-h-screen">
+      <JsonLd data={[generateArticleSchema(item), generateBreadcrumbSchema(breadcrumbItems)]} />
       {/* Hero Section */}
       <header className="relative">
         {/* Featured Image */}
@@ -95,6 +97,7 @@ export default async function ContentDetailPage({ params }: PageProps) {
               src={item.meta.image}
               alt={item.meta.title}
               fill
+              sizes="100vw"
               className="object-cover"
               priority
             />

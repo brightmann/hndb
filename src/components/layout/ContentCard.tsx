@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { ContentItem } from '@/lib/content/types';
 import { Badge } from '@/components/ui/badge';
@@ -34,7 +34,7 @@ export default function ContentCard({
 
   // Format date if available
   const formattedDate = meta.date
-    ? formatDistanceToNow(new Date(meta.date), { addSuffix: true })
+    ? format(new Date(meta.date), 'MMM d, yyyy')
     : null;
 
   if (variant === 'featured') {
@@ -48,6 +48,7 @@ export default function ContentCard({
                 src={meta.image}
                 alt={meta.title}
                 fill
+                sizes="(max-width: 768px) 100vw, 66vw"
                 className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-105"
               />
               {/* Gradient overlay */}
@@ -99,6 +100,7 @@ export default function ContentCard({
                 src={meta.image}
                 alt={meta.title}
                 fill
+                sizes="80px"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </div>
@@ -133,6 +135,7 @@ export default function ContentCard({
               src={meta.image}
               alt={meta.title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-105"
             />
           </div>
